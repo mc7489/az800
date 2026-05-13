@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>AZ-800 Study Guide</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#070b14;color:#dde4ef;font-family:'Courier New',monospace;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:#070b14}::-webkit-scrollbar-thumb{background:#1e3560;border-radius:3px}
+#hdr{display:flex;align-items:center;justify-content:space-between;background:#0b1425;border-bottom:1px solid #1a2e4a;padding:0 18px;height:54px;flex-shrink:0}
+.hl{display:flex;align-items:center;gap:10px}
+.logo{font-size:17px;font-weight:700;color:#60a5fa;cursor:pointer}
+.badge{font-size:10px;background:#112240;color:#93c5fd;padding:2px 8px;border-radius:4px}
+.hr{display:flex;align-items:center;gap:8px;font-size:11px;color:#4a5a72}
+.pbar{width:100px;height:5px;background:#111f33;border-radius:3px;overflow:hidden}
+.pfill{height:100%;background:linear-gradient(90deg,#3b82f6,#10b981);transition:width .4s}
+#wrap{display:flex;flex:1;overflow:hidden}
+#sb{width:246px;background:#09111f;border-right:1px solid #1a2e4a;overflow-y:auto;flex-shrink:0;transition:width .2s}
+#sb.hide{width:0;overflow:hidden}
+.snav{display:flex;align-items:center;gap:8px;width:100%;background:none;border:none;color:#4a6070;padding:7px 16px;cursor:pointer;font-size:12px;font-family:inherit;text-align:left}
+.snav.on{color:#60a5fa;background:#112040}
+.slbl{padding:10px 16px 3px;font-size:9px;color:#2a3f58;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.sdom{display:flex;align-items:center;gap:7px;width:100%;background:none;border:none;color:#3a5268;padding:7px 16px;cursor:pointer;font-size:12px;font-family:inherit;text-align:left}
+.stop{display:block;width:100%;background:none;border:none;color:#334e60;padding:5px 16px 5px 30px;cursor:pointer;font-size:11px;font-family:inherit;text-align:left;line-height:1.5}
+.stop.on{color:#e2e8f0;background:#0f2040}
+#main{flex:1;overflow-y:auto;padding:26px 30px}
+.card{background:#0c1526;border:1px solid #1a2e4a;border-radius:10px;margin-bottom:10px;overflow:hidden;transition:border-color .15s}
+.card:hover{border-color:#2a4a6a}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:13px;margin-bottom:22px}
+.dcard{position:relative;padding:20px;cursor:pointer;background:#0c1526;border-radius:12px;border:1px solid #1a2e4a;transition:all .2s;overflow:hidden}
+.dtop{position:absolute;top:0;left:0;right:0;height:3px}
+.dpbar{height:4px;background:#0f1f35;border-radius:2px;overflow:hidden;margin-bottom:4px}
+.dpfill{height:100%;transition:width .4s}
+input[type=text]{width:100%;background:#0d1728;border:1px solid #1a2e4a;border-radius:8px;padding:10px 14px;color:#dde4ef;font-size:13px;font-family:inherit;outline:none;margin-bottom:18px}
+.btn{border:none;padding:7px 14px;border-radius:6px;font-size:13px;font-family:inherit;font-weight:600;cursor:pointer}
+.blg{padding:10px 20px}
+.bbl{background:#3b82f618;border:1px solid #3b82f640;color:#60a5fa}
+.bgr{background:#10b98118;border:1px solid #10b98140;color:#10b981}
+.brd{background:#ef444418;border:1px solid #ef444440;color:#ef4444}
+.bgy{background:#64748b18;border:1px solid #64748b40;color:#64748b}
+.tabs{display:flex;border-bottom:1px solid #1a2e4a;margin-bottom:16px}
+.tab{background:none;border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;padding:8px 16px;color:#4a5a72;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab.on{color:#60a5fa;border-bottom-color:#3b82f6}
+.ach{display:flex;justify-content:space-between;align-items:center;padding:12px 17px;cursor:pointer}
+.act{font-size:13px;color:#93c5fd;font-weight:600}
+.acb{padding:0 17px 16px;border-top:1px solid #1a2e4a;display:none}
+.acb.on{display:block}
+.acb p{font-size:13px;line-height:1.85;color:#c8d5e8;margin-top:13px}
+.fcwrap{display:flex;flex-direction:column;align-items:center;padding:8px 0}
+.fcctr{font-size:11px;color:#4a5a72;margin-bottom:10px}
+.fccard{width:100%;max-width:560px;min-height:170px;border-radius:12px;padding:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;text-align:center;transition:all .3s;user-select:none}
+.fccard.q{background:#0c1624}.fccard.a{background:#0c1f17}
+.fclbl{font-size:9px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:11px}
+.fctxt{font-size:15px;color:#f1f5f9;line-height:1.65}
+.fcbtns{display:flex;gap:11px;margin-top:13px}
+.bc{display:flex;align-items:center;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.bcsep{color:#4a5a72}
+.bclink{background:none;border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600}
+.irow{display:flex;justify-content:space-between;align-items:center;padding:12px 16px}
+.igrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:9px}
+.iitem{background:#0a1525;border-radius:6px;padding:9px 11px}
+.ilbl{font-size:9px;color:#4a5a72;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px}
+.ival{font-size:12px;color:#dde4ef}
+.qopt{display:flex;align-items:center;gap:10px;padding:8px 11px;border-radius:6px;margin-bottom:4px;cursor:pointer;transition:background .15s}
+.qopt.on{background:#112040}
+.qopt span{font-size:13px;color:#94a3b8;flex:1}
+.qctag{font-size:10px;padding:2px 6px;border-radius:4px}
+.qwrap{max-width:620px;margin:0 auto}
+.qpbar{height:4px;background:#111f33;border-radius:2px;margin-bottom:20px;overflow:hidden}
+.qpfill{height:100%;background:linear-gradient(90deg,#3b82f6,#10b981);transition:width .3s}
+.qdtag{font-size:10px;letter-spacing:.07em;margin-bottom:5px}
+.qres{text-align:center;padding:38px;max-width:480px;margin:0 auto}
+.sbox{display:flex;gap:18px;justify-content:center;margin:18px 0}
+.si{border-radius:10px;padding:13px 28px}
+.sbadge{font-size:10px;border-radius:4px;padding:2px 6px}
+.stag{font-size:10px;color:#10b981;border:1px solid #10b98128;border-radius:4px;padding:2px 6px}
+</style>
+</head>
+<body>
+<div id="hdr">
+  <div class="hl">
+    <button style="background:none;border:none;color:#4a5a72;font-size:18px;cursor:pointer;padding:4px 8px" onclick="toggleSB()">&#9776;</button>
+    <span style="font-size:18px;cursor:pointer" onclick="goHome()">&#127963;</span>
+    <span class="logo" onclick="goHome()">AZ-800</span>
+    <span class="badge">Windows Server Hybrid</span>
+  </div>
+  <div class="hr">
+    <span id="pct">0%</span>
+    <div class="pbar"><div class="pfill" id="pf" style="width:0%"></div></div>
+    <span id="stc">0/0</span>
+  </div>
+</div>
+<div id="wrap">
+  <div id="sb"></div>
+  <div id="main"></div>
+</div>
+<script>
+
+var D=[
+{id:"d1",t:"Domain 1",l:"AD DS &amp; Hybrid Identity",w:"30-35%",c:"#3b82f6",i:"&#127963;",topics:[
+ {id:"d1t1",title:"AD DS Overview &amp; Architecture",secs:[
+  {h:"Active Directory Overview",b:"AD DS stores information about network resources and enables centralized authentication and authorization. A domain is the core security boundary. Domains group into trees (contiguous namespace) and trees into forests (shared schema and Global Catalog). Every forest has one schema partition, one configuration partition, and one or more domain partitions. Uses LDAP (port 389 or LDAPS 636), Kerberos v5 (port 88), and DNS for service location via SRV records. Database: NTDS.DIT stored in the NTDS folder under the Windows system root."},
+  {h:"Kerberos Authentication",b:"Kerberos v5 is the primary AD authentication protocol. Steps: (1) Client gets TGT from KDC. (2) Client presents TGT to request a service ticket. (3) Client presents service ticket to resource. Tickets contain a PAC (Privilege Attribute Certificate) with group memberships. TGT lifetime: 10 hours renewable for 7 days. Requires time sync within 5 minutes max clock skew. Exceeding this causes KRB_AP_ERR_SKEW and auth fails. Port: 88. Delegation: unconstrained (dangerous), constrained (SPN-based), resource-based constrained RBCD (configured on resource)."},
+  {h:"AD DS Partitions and SYSVOL",b:"NTDS.DIT contains: Schema partition (forest-wide, read-only except on Schema Master), Configuration partition (forest-wide, sites and topology), Domain partition (domain-wide, all objects), Application partition (optional, DNS uses ForestDnsZones and DomainDnsZones). SYSVOL stores GPO files and logon scripts. Replicated via DFSR since Server 2008. Verify: dfsrdiag pollad and dfsrdiag syncnow."},
+  {h:"NTLM Authentication",b:"NTLM is legacy authentication used when Kerberos fails or for workgroup computers and IP-based connections. Challenge-response protocol. Versions: LM (weakest, disabled), NTLMv1, NTLMv2 (preferred). Restrict via GPO: Network Security LAN Manager Authentication Level set to NTLMv2 only. Monitor: Event IDs 4624 (logon) and 8004 (NTLM blocked). Disable NTLM where possible."}
+ ],fc:[
+  {q:"What are the four AD DS database partitions?",a:"Schema, Configuration, Domain, and Application"},
+  {q:"What is the max Kerberos clock skew before auth fails?",a:"5 minutes (causes KRB_AP_ERR_SKEW)"},
+  {q:"What ports does LDAP and LDAPS use?",a:"LDAP: 389, LDAPS: 636"},
+  {q:"What is a PAC in a Kerberos ticket?",a:"Privilege Attribute Certificate containing user group memberships for authorization"},
+  {q:"What replaced FRS for SYSVOL replication since Server 2008?",a:"DFSR (DFS Replication)"},
+  {q:"What Kerberos ticket allows requesting service tickets without re-authenticating?",a:"TGT (Ticket Granting Ticket)"}
+ ]},
+ {id:"d1t2",title:"Domain Controllers",secs:[
+  {h:"Promoting to Domain Controller",b:"Server Manager: Add Roles, Active Directory Domain Services, then AD DS Configuration Wizard. PowerShell: Install-ADDSDomainController with DomainName, InstallDns, Credential. Options: Add DC to existing domain, Create child domain (Install-ADDSDomain), Create new forest (Install-ADDSForest). Specify DSRM password, DNS, Global Catalog, RODC option, site, database and SYSVOL paths. Verify: DCDiag /test:all and repadmin /showrepl."},
+  {h:"FSMO Roles",b:"Forest-wide (one per forest): Schema Master (all schema changes), Domain Naming Master (add or remove domains, must be GC). Domain-wide (one per domain): PDC Emulator (password changes first, NTP authority, GPO updates, lockout policy), RID Master (allocates RID pools of 500 to writable DCs), Infrastructure Master (cross-domain object references, do NOT place on GC unless all DCs are GCs). Query: netdom query fsmo. Transfer: Move-ADDirectoryServerOperationMasterRole. Seize when holder is down: ntdsutil then roles then seize."},
+  {h:"AD DS Replication",b:"Multi-master: all writable DCs accept changes, tracked via USN. Intra-site: 15-second change notification delay, RPC over IP TCP 135 plus dynamic, bidirectional ring. Inter-site: interval-based default 180 min, site links define paths with cost. ISTG auto-selects bridgehead servers. Troubleshoot: repadmin /showrepl, repadmin /replsummary, dcdiag /test:replications. Event IDs: 1311 topology, 1388 lingering objects, 2042 DC offline too long."},
+  {h:"Read-Only Domain Controllers",b:"RODCs for branch offices with poor physical security. Read-only AD copy, one-way replication from writable DC, filtered attribute set prevents sensitive attribute caching. Password Replication Policy: Allowed RODC PRP Group (add branch users), Denied RODC PRP Group (Domain Admins etc.). Admin Role Separation: local RODC admin without DA rights. Staged install: create RODC account in ADUC first then attach server. Prepopulate passwords: repadmin /rodcpwdrepl. Install: Install-ADDSDomainController -ReadOnlyReplica:$true"},
+  {h:"Azure IaaS DCs",b:"AD DS DCs in Azure VMs for hybrid or cloud-only scenarios. Best practices: static private IP, Premium SSD for NTDS.DIT, set Host Caching to None on data disk (prevents corruption). Create Azure AD site and map VNet subnets in AD Sites and Services. Never put NTDS.DIT on the ephemeral temp disk (labeled D in Windows, data lost on VM deallocation). Deploy 2 or more DCs across Availability Zones. Use Azure Backup with VSS-consistent snapshots."}
+ ],fc:[
+  {q:"Which FSMO role should NOT be on a GC unless all DCs are GCs?",a:"Infrastructure Master"},
+  {q:"What is the default RID pool block size per DC?",a:"500 RIDs per pool"},
+  {q:"What is the intra-site replication change notification delay?",a:"15 seconds"},
+  {q:"How do you seize an FSMO role when the holder is offline?",a:"ntdsutil then roles then seize (role name)"},
+  {q:"What Azure disk caching must be set on the AD database disk?",a:"None (no caching) to prevent data corruption"},
+  {q:"What command summarizes AD replication status across all DCs?",a:"repadmin /replsummary"}
+ ]},
+ {id:"d1t3",title:"Multi-Site, Trusts and Functional Levels",secs:[
+  {h:"AD Sites",b:"Sites represent physical locations with fast connectivity. Configure in AD Sites and Services: Site objects, Subnet objects (IP ranges mapped to sites), Site Links. Properties: Cost (lower preferred), Replication interval (default 180 min, minimum 15 min), Schedule. Bridge all site links enabled by default, disable for hub-and-spoke. ISTG auto-selects bridgehead servers. Client site affinity: nearest DC located via subnet mapping."},
+  {h:"Trust Types",b:"Parent-Child: automatic, two-way, transitive (created with child domain). Tree-Root: automatic, two-way, transitive. Shortcut: manual, reduces Kerberos referral path in large forests. External: different forests or NT 4.0, non-transitive. Forest: two forest root domains, transitive within both forests, selective authentication possible. Realm: AD to non-Windows Kerberos. SID Filtering: enabled by default on external trusts, prevents cross-forest SID spoofing. Verify: netdom trust /verify."},
+  {h:"Functional Levels and Protected Users",b:"Raising functional levels is one-way and irreversible. Server 2016 DFL adds PAM and time-bound group membership. Raise: Set-ADDomainMode or Set-ADForestMode. Protected Users group: members cannot use NTLM, CredSSP, WDigest, or Kerberos unconstrained delegation. TGT limited to 4 hours. Use for all privileged accounts. Authentication Policies require Server 2012 R2 DFL minimum."}
+ ],fc:[
+  {q:"What trust is automatically created between a parent and child domain?",a:"Parent-Child trust: automatic, two-way, transitive"},
+  {q:"What trust connects two forest root domains with trust transitive in both forests?",a:"Forest trust"},
+  {q:"What prevents cross-forest SID spoofing on external trusts?",a:"SID Filtering (enabled by default)"},
+  {q:"What does the Protected Users group prevent?",a:"NTLM, CredSSP, WDigest, Kerberos unconstrained delegation. TGT limited to 4 hours"},
+  {q:"What is the minimum site link replication interval?",a:"15 minutes"}
+ ]},
+ {id:"d1t4",title:"Users, Groups, GPOs and Password Policies",secs:[
+  {h:"User Accounts",b:"Create: New-ADUser with Name, SamAccountName, UserPrincipalName, Path, AccountPassword, Enabled. Bulk: Import-Csv piped to New-ADUser. Track last logon: lastLogon (per-DC, not replicated) vs lastLogonTimestamp (replicated, updated only if older than 14 days). Disable accounts for offboarding to preserve SID and group memberships. Delete is permanent."},
+  {h:"Groups",b:"Types: Security (for permissions, can receive email) and Distribution (email only, no permissions). Scopes: Domain Local (any forest account, permissions in same domain only), Global (same domain accounts, permissions anywhere), Universal (any forest account, stored in GC, membership changes replicate forest-wide). Best practice AGDLP: Accounts, Global, Domain Local, Permissions. Multi-domain AGUDLP: add Universal between Global and Domain Local."},
+  {h:"Group Policy",b:"Computer Configuration applied at startup, refresh every 90 plus or minus 30 min. User Configuration applied at logon, same interval. Policies enforce settings users cannot change. Preferences are configurable defaults users can override. Processing order LSDOU: Local, Site, Domain, OU. Last applied wins conflicts. Enforced GPO cannot be blocked by Block Inheritance. Force refresh: gpupdate /force. Loopback Replace: only computer-targeted user policies applied (kiosks, VDI, RDS). Item-Level Targeting in Preferences: conditions (OS, OU, IP, group, etc.) for fine-grained application."},
+  {h:"GPO Troubleshooting and ADMX",b:"Steps: 1) Verify GPO link enabled. 2) Security filtering: user and computer need Read AND Apply Group Policy. 3) WMI filter must return true. 4) gpresult /r summary or gpresult /h report.html. 5) rsop.msc. 6) Event Log: Apps and Services, Microsoft, Windows, Group Policy. Event IDs: 4016 processing started, 7016 CSE slow, 1006 cannot reach DC. ADMX Central Store: copy PolicyDefinitions to SYSVOL Policies on any DC so all GPMC consoles use it automatically."},
+  {h:"Fine-Grained Password Policies",b:"Multiple password policies in one domain. Requires Server 2008 DFL minimum. Password Settings Objects stored in CN=Password Settings Container. Apply to global security groups or users. Precedence: lower number wins. Get effective PSO: Get-ADUserResultantPasswordPolicy -Identity username. Settings: min length, complexity, history, max and min age, lockout threshold, lockout duration, lockout observation window. Manage via ADAC or New-ADFineGrainedPasswordPolicy."}
+ ],fc:[
+  {q:"What AD attribute is replicated but only updated if stale by 14+ days?",a:"lastLogonTimestamp"},
+  {q:"What is AGDLP?",a:"Accounts, Global groups, Domain Local groups, Permissions"},
+  {q:"What is GPO processing order LSDOU?",a:"Local, Site, Domain, OU. Last applied wins conflicts"},
+  {q:"What GPO setting overrides Block Inheritance?",a:"Enforced (formerly No Override)"},
+  {q:"What is Item-Level Targeting in GPP?",a:"Conditions that determine which computers or users a preference applies to"},
+  {q:"What cmdlet shows effective PSO for a user?",a:"Get-ADUserResultantPasswordPolicy -Identity username"}
+ ]},
+ {id:"d1t5",title:"Hybrid Identity and Azure AD Connect",secs:[
+  {h:"Azure AD Connect",b:"Synchronizes on-premises AD to Entra ID. Runs on dedicated Windows Server (not DC). Requires .NET 4.6.2+, SQL Express or full SQL, Server 2016+ for v2.x. Staging mode: second server read-only, does not write to Azure AD, used for DR or testing. Default sync: every 30 minutes. Force delta: Start-ADSyncSyncCycle -PolicyType Delta. Force full: Start-ADSyncSyncCycle -PolicyType Initial."},
+  {h:"Authentication Methods",b:"Password Hash Sync (PHS): hashed passwords synced to cloud, works if on-prem is down, supports Entra ID Protection and Smart Lockout. Lowest complexity. Pass-Through Authentication (PTA): cloud sends auth to on-prem agents in real time, passwords never in cloud, needs 2+ agents for HA, auth fails if all agents down. ADFS: full federation, most control, supports smart cards and custom claims, most complex. Seamless SSO: works with PHS or PTA using Kerberos for SSO from domain-joined machines."},
+  {h:"Hybrid Azure AD Join and Defender for Identity",b:"Hybrid Azure AD Join: device registered in both on-prem AD AND Entra ID. Requirements: AAD Connect with device sync, Service Connection Point (SCP) in on-prem AD. Verify: dsregcmd /status, check AzureAdJoined YES and DomainJoined YES. Microsoft Defender for Identity (MDI): sensors on DCs detect pass-the-hash, pass-the-ticket, golden ticket, DCSync, Kerberoasting, AS-REP roasting, LSASS dumping, Skeleton Key, reconnaissance. Integrates with Microsoft 365 Defender and Sentinel. License: M365 E5 or MDI standalone."}
+ ],fc:[
+  {q:"What AAD Connect mode passively syncs but does not write to Azure AD?",a:"Staging mode (used for DR and testing)"},
+  {q:"What cmdlet forces a delta sync in Azure AD Connect?",a:"Start-ADSyncSyncCycle -PolicyType Delta"},
+  {q:"What authentication method validates passwords on-prem via agents without cloud storage?",a:"Pass-Through Authentication (PTA)"},
+  {q:"What command verifies Hybrid Azure AD Join status?",a:"dsregcmd /status: check AzureAdJoined YES and DomainJoined YES"},
+  {q:"What product detects DCSync, golden ticket, and pass-the-hash in on-prem AD?",a:"Microsoft Defender for Identity (MDI)"},
+  {q:"What on-prem AD object enables automatic Hybrid Azure AD Join discovery?",a:"Service Connection Point (SCP)"}
+ ]},
+ {id:"d1t6",title:"Azure AD DS and PIM",secs:[
+  {h:"Azure AD DS",b:"Managed domain service: LDAP, Kerberos, NTLM, Group Policy without managing DCs. Microsoft manages everything. Two DCs auto-deployed across Availability Zones. Sync: Entra ID to Azure AD DS only (one-way, read-only). Cannot extend schema, add DCs, or access DCs directly. Can: domain-join Azure VMs, run LDAP apps, use Kerberos and NTLM, apply limited GPO. SKUs: Standard, Enterprise (5x objects, hourly backup), Premium (10x objects, 12-hour backup). VMs must be in same or peered VNet."},
+  {h:"Azure AD DS Administration",b:"Schema Admins and Enterprise Admins do NOT exist in Azure AD DS. AAD DC Administrators group: delegated rights to manage DNS, GPO, and OUs. Manage via ADUC, GPMC, DNS Manager on a domain-joined Azure VM with RSAT. LDAPS: configure certificate per managed domain. Kerberos Constrained Delegation supported."},
+  {h:"Privileged Identity Management",b:"PIM provides just-in-time access for Entra ID and Azure RBAC roles. Requires Entra ID Premium P2. Eligible assignment: must activate before use. Activation requires MFA, approval, and justification. Configure per role: max activation duration 1 to 24 hours, require MFA, require approval, require justification, notify approvers. Access reviews: periodic review with auto-revoke if reviewer does not respond. All activations logged in Entra ID audit logs."}
+ ],fc:[
+  {q:"What group provides admin rights in Azure AD DS?",a:"AAD DC Administrators group"},
+  {q:"What admin roles do NOT exist in Azure AD DS?",a:"Schema Admins and Enterprise Admins"},
+  {q:"What is the sync direction in Azure AD DS?",a:"One-way: Entra ID to Azure AD DS (managed domain is read-only)"},
+  {q:"What Entra ID P2 feature provides just-in-time role activation?",a:"Privileged Identity Management (PIM)"}
+ ]}
+]},
+{id:"d2",t:"Domain 2",l:"Hybrid Server Management",w:"10-15%",c:"#10b981",i:"&#128295;",topics:[
+ {id:"d2t1",title:"Windows Admin Center and Remote Management",secs:[
+  {h:"Windows Admin Center",b:"Browser-based management platform, no cloud dependency, no agents (uses WinRM and PowerShell). Desktop mode: port 6516, single user. Gateway mode: port 443 with TLS, multi-user, recommended for teams. Manages Server 2012 R2+, Windows 10 and 11, Azure VMs via hybrid services, HCI, Failover Clusters. Tools: Certificates, DNS, Events, Files, Firewall, PowerShell, Processes, Registry, Remote Desktop, Roles and Features, Services, Storage, Storage Spaces Direct, Virtual Machines. Extensions: Azure Backup, ASR, File Sync, SQL Server."},
+  {h:"PowerShell Remoting and JEA",b:"Uses WinRM. Enable: Enable-PSRemoting -Force. Ports: HTTP 5985, HTTPS 5986. Interactive: Enter-PSSession -ComputerName Server1. Batch: Invoke-Command -ComputerName S1,S2 -ScriptBlock {}. Persistent sessions: New-PSSession then reuse with -Session. Second-hop problem: use Kerberos RBCD (recommended) or CredSSP (security risk). JEA (Just Enough Administration): limits remoting to specific cmdlets per role. Role Capability file (.psrc): defines allowed commands. Session Configuration file (.pssc): registers endpoint and maps roles."},
+  {h:"Server Core and SSH",b:"Server Core: roughly 40 percent smaller footprint, fewer CVEs, lower resource use, recommended for production. sconfig: text-based UI. Options: 1=Domain or workgroup, 2=Computer name, 4=Remote management WinRM, 5=Windows Update, 7=Remote desktop, 8=Network. Install features: Install-WindowsFeature -Name FeatureName -IncludeManagementTools. Manage via RSAT, WAC, PowerShell Remoting. Converting to Desktop Experience requires reinstall. SSH on Server 2019+: Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0. Start sshd service and set startup to Automatic."},
+  {h:"Azure Arc and Azure Update Manager",b:"Azure Arc: Connected Machine agent makes on-prem servers appear as Azure resources. Onboard via portal script or azcmagent connect. Enables: Azure Policy, VM extensions, Azure Monitor, Defender for Servers, Update Management, DSC, Key Vault extension, SSH from portal. Requires outbound HTTPS port 443. Azure Update Manager (2026): replaces legacy Automation Update Management. No Log Analytics required. Agentless assessment for Azure VMs, configurable maintenance windows, update classification filters. Azure Policy integration auto-enables periodic assessment on new VMs."},
+  {h:"Defender for Cloud",b:"Security posture management and workload protection. Plan 1: Defender for Endpoint integration. Plan 2: vulnerability assessment, Just-In-Time VM access, file integrity monitoring, adaptive application controls. Secure Score: 0 to 100 percent security posture. JIT VM Access: locks RDP and SSH ports, opens only on request with configurable timeout, greatly reduces attack surface."}
+ ],fc:[
+  {q:"What port does WAC Gateway mode use?",a:"Port 443 (HTTPS)"},
+  {q:"What JEA file defines allowed commands for a remoting endpoint?",a:".psrc (PowerShell Role Capability file)"},
+  {q:"What is the recommended fix for the PowerShell Remoting second-hop problem?",a:"Kerberos Resource-Based Constrained Delegation (RBCD)"},
+  {q:"What sconfig option enables WinRM?",a:"Option 4: Remote Management"},
+  {q:"What Azure service replaces Azure Automation Update Management for patching in 2026?",a:"Azure Update Manager"},
+  {q:"What Defender for Cloud feature opens RDP or SSH only on request?",a:"Just-In-Time (JIT) VM Access"},
+  {q:"What WinRM ports does PowerShell Remoting use?",a:"HTTP: 5985 and HTTPS: 5986"}
+ ]},
+ {id:"d2t2",title:"WSUS, Azure Migrate and Storage Migration",secs:[
+  {h:"Windows Server Update Services",b:"Centralized on-premises update distribution. Client ports: 8530 HTTP and 8531 HTTPS. Requires IIS (auto-installed), .NET 4.0+, WID or SQL Server. Computer groups: Test, Pilot, Production. Client GPO: Computer Configuration, Admin Templates, Windows Components, Windows Update. Key setting: Specify intranet Microsoft update service location. Approvals: auto-approve specific classifications per group or manual review. WSUS Cleanup Wizard: run regularly to remove superseded updates and old records."},
+  {h:"Azure Migrate and Storage Migration",b:"Azure Migrate: central hub for server migrations. Discovery and Assessment tool deploys lightweight appliance on-prem for agentless discovery and right-sizing. Migration tool replicates VMs. Test migration: non-disruptive test failover to isolated VNet. Supported sources: VMware, Hyper-V, physical, AWS, GCP. Storage Migration Service (SMS): migrates file servers. Phases: Inventory (scan shares and permissions), Transfer (copy data while source stays live), Cutover (transfer identity including name, IP, shares, local users with minimal downtime). Managed via WAC SMS tool."}
+ ],fc:[
+  {q:"What WSUS ports are used for client communication?",a:"8530 HTTP and 8531 HTTPS"},
+  {q:"What WSUS GPO setting directs clients to the WSUS server?",a:"Specify intranet Microsoft update service location"},
+  {q:"What SMS phase transfers server identity (name, IP, shares)?",a:"Cutover phase"},
+  {q:"What Azure Migrate component deploys on-prem to discover and assess servers?",a:"Azure Migrate Appliance (lightweight on-premises VM)"}
+ ]}
+]},
+{id:"d3",t:"Domain 3",l:"VMs and Containers",w:"15-20%",c:"#8b5cf6",i:"&#128421;",topics:[
+ {id:"d3t1",title:"Hyper-V Core Configuration",secs:[
+  {h:"Virtual Switches",b:"External: binds to physical NIC, VMs communicate with external network and host. Internal: VMs communicate with each other and host, no external access. Private: VMs only, host excluded. SET (Switch Embedded Teaming): NIC teaming built into vSwitch, supports RDMA and SR-IOV, recommended over Windows NIC Teaming for Hyper-V. SR-IOV: hardware NIC virtualization bypassing vSwitch for near-bare-metal performance. SMB Direct and RDMA: remote direct memory access for ultra-low CPU and latency."},
+  {h:"Virtual Hard Disks and Checkpoints",b:"VHDX preferred: 64 TB max (VHD max is 2 TB), better resiliency, 4K alignment. Types: Fixed (best IOPS), Dynamically Expanding (worst IOPS), Differencing (tracks changes from parent). Commands: New-VHD, Convert-VHD, Optimize-VHD (compact), Mount-VHD. Standard checkpoints: pauses state, not app-consistent, can corrupt databases, avoid in production. Production checkpoints: VSS-based, app-consistent, always use these in production. Apply: Restore-VMCheckpoint."},
+  {h:"Live Migration and Replica",b:"Generation 1: BIOS, IDE, legacy NIC PXE, supports older and 32-bit OS. Generation 2: UEFI, Secure Boot, SCSI only, faster boot, requires 64-bit OS (Win8 or Server 2012 minimum). Cannot change generation after creation. Live Migration: zero downtime, requires compatible CPU or Processor Compatibility Mode, Kerberos or CredSSP. Shared Nothing: no shared storage, copies VHD during migration. Storage Migration: moves storage while VM runs. Quick Migration: save state, migrate, resume (brief pause). Hyper-V Replica: async replication to secondary host. Intervals: 30 sec, 5 min, or 15 min. Test Failover: isolated, no replication impact. Planned: shutdown primary, zero data loss. Unplanned: primary down, potential data loss."},
+  {h:"Shielded VMs and Advanced Features",b:"Shielded VMs: BitLocker-encrypted VHDX with virtual TPM, prevents fabric admin access. Host Guardian Service (HGS): validates host trust via Admin-trusted (AD group) or TPM-trusted (hardware TPM 2.0, recommended) attestation. Shielding Data File (.pdk): contains VM secrets including RDP cert, admin password, BitLocker protector. PowerShell Direct: run commands inside VM via Hyper-V VMBus without network, use Enter-PSSession -VMName or Invoke-Command -VMName. Enhanced Session Mode: clipboard, USB, drive redirection via VMConnect, enable with Set-VMHost -EnableEnhancedSessionMode $true. GPU Partitioning (GPU-P): Server 2025+, shares one physical GPU fractionally across multiple VMs for VDI and AI inference."}
+ ],fc:[
+  {q:"What Hyper-V switch allows VMs to talk to each other and host but not external?",a:"Internal virtual switch"},
+  {q:"What is the maximum VHDX size?",a:"64 TB"},
+  {q:"What checkpoint type uses VSS for application-consistent snapshots?",a:"Production checkpoint: always use this in production"},
+  {q:"What validates Hyper-V host trust before running Shielded VMs?",a:"Host Guardian Service (HGS)"},
+  {q:"What allows running PowerShell inside a VM without network access?",a:"PowerShell Direct (Enter-PSSession -VMName)"},
+  {q:"What Hyper-V Replica failover type guarantees zero data loss?",a:"Planned Failover (requires shutting down primary VM first)"},
+  {q:"What Server 2025 feature shares a GPU fractionally across multiple VMs?",a:"GPU Partitioning (GPU-P)"}
+ ]},
+ {id:"d3t2",title:"Azure VMs and Containers",secs:[
+  {h:"Azure VM Deployment and Availability",b:"Deploy via portal, ARM templates, Bicep, PowerShell (New-AzVM), Azure CLI, or Terraform. Custom images: run Sysprep /oobe /generalize /shutdown before capture. Store in Azure Compute Gallery (ACG) with versioning, multi-region replication, RBAC. Specialized image preserves SID. Generalized image stripped for template use. Availability Set: fault domains and update domains, 99.95 percent SLA with 2+ VMs. Availability Zones: separate physical datacenters, 99.99 percent SLA with 2+ VMs. Azure Site Recovery: replicates VMs to secondary region, RPO under 15 minutes."},
+  {h:"Azure VM Disks and Connectivity",b:"Disk types: Ultra Disk (configurable IOPS and throughput, sub-ms latency, no snapshot), Premium SSD v2 (flexible IOPS, snapshots supported), Premium SSD (fixed tiers, production), Standard SSD, Standard HDD. Temp disk labeled D: ephemeral, data lost on VM deallocation or resize, use only for pagefile or temp data. Always use managed disks. Disk caching: OS disk default ReadWrite, data disks default None. Azure Bastion: PaaS RDP and SSH in browser without VM public IP. Basic (RDP and SSH) and Standard (file transfer, shareable link) tiers. JIT VM Access: locks management ports, opens only on request."},
+  {h:"Windows Containers and ACR",b:"Windows base images: Server Core (large, most compatible, full .NET Framework), Nano Server (minimal, fastest, .NET Core only), Windows (full API). Isolation: Process isolation (shares host kernel, lightweight) and Hyper-V isolation (own kernel per container, stronger, use for multi-tenant workloads). For process isolation container OS version must match or be lower than host. Prerequisites: Install-WindowsFeature Containers then install Docker. Docker commands: docker pull (download), docker run -d -p host:container image, docker ps (running), docker images (list), docker logs name, docker exec -it name cmd. ACR Premium: geo-replication and private link. AKS Arc: Kubernetes on-prem managed from Azure portal. WSL2 on Server 2022+: Linux distros via Hyper-V VM for Linux kernel."}
+ ],fc:[
+  {q:"What must run before capturing a generalized Azure VM image?",a:"Sysprep /oobe /generalize /shutdown"},
+  {q:"What Azure availability option provides 99.99% SLA?",a:"Availability Zones (separate physical datacenters, 2+ VMs required)"},
+  {q:"What Azure disk offers configurable IOPS and throughput below 1ms latency?",a:"Ultra Disk"},
+  {q:"What gives browser-based RDP and SSH without a VM public IP?",a:"Azure Bastion"},
+  {q:"What Windows container isolation gives each container its own VM kernel?",a:"Hyper-V isolation"},
+  {q:"What ACR tier supports geo-replication and private link?",a:"Premium tier"}
+ ]}
+]},
+{id:"d4",t:"Domain 4",l:"Network Infrastructure",w:"15-20%",c:"#f59e0b",i:"&#127758;",topics:[
+ {id:"d4t1",title:"DNS Design, Zones and Troubleshooting",secs:[
+  {h:"DNS Zone Types",b:"Install: Install-WindowsFeature -Name DNS -IncludeManagementTools. Primary: writable, authoritative. Secondary: read-only copy, zone transfers via TCP 53. Stub: SOA, NS, and A records for NS only, used for delegation resolution. AD-integrated: stored in AD, multi-master from any DC with DNS, secure-only dynamic updates, replicates via AD. Conditional forwarder: forwards specific domain to specified servers, no zone data stored. Forwarder: upstream DNS for unresolved queries. Root hints: internet root servers used when forwarder fails."},
+  {h:"DNS Records",b:"A: hostname to IPv4. AAAA: hostname to IPv6. CNAME: alias to FQDN. MX: mail exchanger with priority (lower preferred). NS: name servers for zone. SOA: Start of Authority with serial, refresh, retry, expire, negative TTL. PTR: reverse lookup IP to hostname in in-addr.arpa zones. SRV: service location critical for AD (_ldap._tcp, _kerberos._tcp, _gc._tcp). TXT: SPF, DKIM, DMARC, domain verification. CAA: which CAs can issue certs for domain."},
+  {h:"DNSSEC, Policies and Azure DNS",b:"DNSSEC: ZSK signs records, KSK signs ZSK, DS in parent creates chain of trust. NSEC3 hashes record names to prevent zone enumeration. Enable in DNS Manager: right-click zone, DNSSEC, Sign Zone. DNS socket pool: randomizes UDP source ports (default 2500) to prevent cache poisoning. DNS cache locking: prevents cache entry replacement during TTL. Response Rate Limiting (RRL): throttles amplification attacks. Split-brain DNS: same domain resolves differently for internal vs external clients. Azure Private DNS zones: resolution within Azure VNets with auto-registration. Azure DNS Private Resolver: hybrid DNS without DNS server VMs. Deploy inbound endpoint for on-prem to resolve Azure zones and outbound endpoint with forwarding rules for Azure to resolve on-prem zones."},
+  {h:"DNS Troubleshooting",b:"nslookup: test DNS resolution. Use nslookup -type=SRV _ldap._tcp.corp.local to verify AD SRV records. Resolve-DnsName: PowerShell DNS testing. ipconfig /flushdns: clear local DNS cache. ipconfig /displaydns: show cached entries. dcdiag /test:dns: comprehensive DC and DNS check. Common issues: missing SRV records (restart Netlogon to re-register), stale records (configure scavenging), split-brain misconfiguration. Event IDs: 4097 (DNS server stopped), 2503 (zone transfer failed), 6702 (forwarder failure). DNS scavenging: auto-removes stale dynamic records, configure on both zone and server."}
+ ],fc:[
+  {q:"What DNS zone type stores records in AD and uses AD replication for multi-master updates?",a:"Active Directory-integrated zone"},
+  {q:"What DNS record type is essential for Active Directory service location?",a:"SRV record (_ldap._tcp, _kerberos._tcp, _gc._tcp)"},
+  {q:"What DNSSEC record hashes record names to prevent zone enumeration?",a:"NSEC3"},
+  {q:"What DNS feature randomizes UDP source ports to prevent cache poisoning?",a:"DNS socket pool (default 2500 ports)"},
+  {q:"What Azure service enables hybrid DNS without deploying DNS server VMs?",a:"Azure DNS Private Resolver"},
+  {q:"What command clears the local DNS resolver cache?",a:"ipconfig /flushdns"},
+  {q:"What DNS zone contains only SOA and NS records for a delegated subdomain?",a:"Stub zone"}
+ ]},
+ {id:"d4t2",title:"DHCP and IP Address Management",secs:[
+  {h:"DHCP DORA and Configuration",b:"Install: Install-WindowsFeature -Name DHCP -IncludeManagementTools. Authorize in AD: Add-DhcpServerInDC (requires Domain or Enterprise Admin). DORA: Discover (broadcast UDP 67), Offer (server responds UDP 68), Request (client broadcasts acceptance), Acknowledge (server confirms lease). DHCP relay agent forwards broadcasts between subnets. Scope options hierarchy: Default, Scope (overrides default), Class (vendor or user class), Reservation (overrides all). Key options: 003 Router, 006 DNS servers, 015 DNS domain name. Lease renewal: T1 at 50 percent unicast attempt, T2 at 87.5 percent broadcast if T1 failed, then full DORA."},
+  {h:"DHCP High Availability and IPAM",b:"DHCP Failover (Server 2012+): two servers share scope data without shared storage. Load Balance: both active, configurable split (default 50/50). Hot Standby: one active, one passive taking over after active fails. MCLT (Max Client Lead Time): standby waits this long before assuming sole responsibility (default 1 hour). DHCP Policies: different options or IP ranges based on MAC, vendor class, user class, FQDN, relay agent info. MAC filtering: Allow list or Deny list. IPAM: built-in role for centralized DHCP, DNS, and IP space management. IPAM server cannot run DHCP or DNS. Discovery: Invoke-IpamGpoProvisioning. Features: IP space tracking, DHCP management across multiple servers, DNS management, event log correlation."}
+ ],fc:[
+  {q:"What are the four steps of DHCP DORA?",a:"Discover, Offer, Request, Acknowledge"},
+  {q:"What DHCP failover mode makes both servers actively hand out leases?",a:"Load Balance mode"},
+  {q:"What DHCP option number configures the default gateway?",a:"Option 003 (Router)"},
+  {q:"At what percentage of lease time does a DHCP client first attempt unicast renewal?",a:"50 percent (T1)"},
+  {q:"What is MCLT in DHCP Failover Hot Standby mode?",a:"Max Client Lead Time: how long standby waits before taking sole responsibility (default 1 hour)"},
+  {q:"What must be done before a DHCP server can serve leases in an AD domain?",a:"Authorize it in Active Directory using Add-DhcpServerInDC"}
+ ]},
+ {id:"d4t3",title:"VPN, Routing and Hybrid Connectivity",secs:[
+  {h:"RRAS and VPN Protocols",b:"RRAS provides VPN server, NAT, and LAN routing. Install: Install-WindowsFeature Routing -IncludeManagementTools. VPN protocols: PPTP (TCP 1723, weak encryption, avoid), L2TP/IPsec (UDP 1701 plus 500 and 4500, strong security), SSTP (SSL over TCP 443, works through most firewalls and NAT), IKEv2 (UDP 500 and 4500, MOBIKE for roaming, fastest reconnect, preferred for mobile workers). Always On VPN replaces DirectAccess. Device Tunnel: connects before logon using computer cert and IKEv2, for device management. User Tunnel: connects after logon. Configure via Intune, SCCM, or GPO using ProfileXML. NPS: RADIUS server for VPN and 802.1X. Connection Request Policies (where to auth) and Network Policies (conditions and grant or deny)."},
+  {h:"Azure VPN Gateway and ExpressRoute",b:"Azure VPN Gateway: IPsec and IKE tunnels to Azure VNets. Requires subnet named exactly GatewaySubnet (minimum /27). Route-based (BGP, multiple S2S tunnels, P2S, IKEv2, use for modern scenarios) vs Policy-based (IKEv1, static routes, one S2S only, legacy). Active-Active mode: two public IPs. BGP: Azure default ASN is 65515. P2S protocols: SSTP (Windows), IKEv2 (Windows and Mac), OpenVPN (all). VNet Peering: direct VNet connectivity without gateway, lower latency. ExpressRoute: private dedicated Layer 3 connection, NOT over internet. Azure private peering (VNet connectivity) and Microsoft peering (M365 and Azure public). NOT encrypted by default: use MACsec or IPsec over private peering. Global Reach: connect on-prem sites to each other via Microsoft backbone. SMB over QUIC: QUIC protocol (UDP-based) for SMB without VPN, server requires Server 2022 Datacenter Azure Edition, Windows 11 clients supported."}
+ ],fc:[
+  {q:"What VPN protocol uses TCP 443 and works through most firewalls?",a:"SSTP (Secure Socket Tunneling Protocol)"},
+  {q:"What Always On VPN tunnel connects before user logon using a machine cert?",a:"Device Tunnel (IKEv2 only, computer certificate)"},
+  {q:"What subnet name is required for Azure VPN Gateway?",a:"GatewaySubnet (must be named exactly this, minimum /27)"},
+  {q:"What Azure VPN type supports BGP, multiple S2S tunnels, P2S, and IKEv2?",a:"Route-based VPN Gateway"},
+  {q:"What ExpressRoute feature connects on-prem sites to each other via Microsoft backbone?",a:"ExpressRoute Global Reach"},
+  {q:"What Server 2022 edition supports SMB over QUIC on the server side?",a:"Windows Server 2022 Datacenter Azure Edition"},
+  {q:"What encryption does ExpressRoute provide by default?",a:"None: ExpressRoute is NOT encrypted by default"}
+ ]}
+]},
+{id:"d5",t:"Domain 5",l:"Storage and File Services",w:"15-20%",c:"#ef4444",i:"&#128190;",topics:[
+ {id:"d5t1",title:"Windows Server Storage",secs:[
+  {h:"Disk Types and Partition Styles",b:"MBR: max 2 TB, max 4 primary partitions (or 3 primary plus 1 extended), supported on all BIOS systems. GPT: max 128 PB, up to 128 partitions, requires UEFI for boot disk, more resilient. Convert MBR OS disk to GPT without data loss using MBR2GPT.exe. Basic disk: standard partitions. Dynamic disk: software RAID (simple, spanned, striped RAID 0, mirrored RAID 1, RAID-5). RAID levels: 0 striping no redundancy, 1 mirroring tolerates 1 failure, 5 striping with parity tolerates 1 failure needs 3+ disks, 6 dual parity tolerates 2 failures, 10 mirrored pairs then striped best performance and redundancy."},
+  {h:"Storage Spaces and S2D",b:"Storage Spaces pools physical disks into virtual disks with configurable resiliency. Resiliency: Simple (no redundancy), Two-way mirror (2 copies, needs 2+ disks), Three-way mirror (3 copies, needs 3+), Single parity (RAID 5, needs 3+), Dual parity (RAID 6, needs 7+). Thin provisioning: virtual capacity exceeds physical. Tiering: auto-moves hot data to SSD tier. S2D (Storage Spaces Direct): hyper-converged storage with local server disks in a cluster, eliminates external SAN. Requires Server 2016 Datacenter+, Failover Clustering, minimum 2 nodes (4+ recommended). Enable: Enable-ClusterS2D. Uses CSV for shared namespace. Monitor: Get-StoragePool, Get-VirtualDisk, Get-PhysicalDisk."},
+  {h:"iSCSI",b:"iSCSI delivers block-level storage over TCP/IP. Default port: TCP 3260. iSCSI Target Server: exposes LUNs to clients. iSCSI Initiator: built-in Windows client (iscsicpl.exe). Discovery: enter target portal IP and port or use iSNS. Authentication: CHAP (one-way) and Mutual CHAP (bidirectional, more secure). MPIO (Multipath I/O): Install-WindowsFeature Multipath-IO then Enable-MSDSMAutomaticClaim -BusType iSCSI for redundancy and load balancing. Best practices: dedicated VLAN, jumbo frames 9000 MTU on NIC, switch, and target."}
+ ],fc:[
+  {q:"What is the max partition count for GPT on Windows?",a:"128 partitions"},
+  {q:"What Storage Spaces resiliency type is like RAID 6 and needs 7+ disks?",a:"Dual parity"},
+  {q:"What is the default TCP port for iSCSI?",a:"TCP 3260"},
+  {q:"What cmdlet enables Storage Spaces Direct on a failover cluster?",a:"Enable-ClusterS2D"},
+  {q:"What Windows feature provides multi-path redundancy for iSCSI?",a:"MPIO (Multipath I/O)"},
+  {q:"What tool converts MBR OS disk to GPT without data loss?",a:"MBR2GPT.exe"}
+ ]},
+ {id:"d5t2",title:"SMB, DFS, FSRM and BranchCache",secs:[
+  {h:"SMB Versions",b:"SMB 1.0: legacy, vulnerable to EternalBlue and WannaCry, ALWAYS disable. SMB 2.0 (Vista and Server 2008): reduced chattiness, pipelining. SMB 2.1 (Win 7 and Server 2008 R2): opportunistic locking. SMB 3.0 (Win 8 and Server 2012): Transparent Failover, Multichannel, SMB Direct RDMA, Encryption, VSS. SMB 3.1.1 (Win 10 and Server 2016): AES-128-GCM, pre-auth integrity with SHA-512. Disable SMB 1: Set-SmbServerConfiguration -EnableSMB1Protocol $false (default off in Server 2019+). SMB Multichannel: multiple NICs for bandwidth aggregation and failover, automatic when detected. SMB Encryption: per share Set-SmbShare -Name HR -EncryptData $true or server-wide Set-SmbServerConfiguration -EncryptData $true. SMB Direct: RDMA for ultra-low CPU and latency."},
+  {h:"DFS Namespaces and DFS Replication",b:"DFS Namespaces (DFS-N): unified namespace for shares across multiple servers. Domain-based (stored in AD, highly available) and Stand-alone (single server). Folder targets: each namespace folder points to multiple server shares for load distribution and fault tolerance. Referrals: clients receive ordered list (lowest AD site cost first). Access-Based Enumeration (ABE): users see only folders they can access. DFS Replication (DFS-R): replicates files using RDC (Remote Differential Compression) to replicate only changed blocks, minimizing WAN bandwidth. Full mesh or hub-spoke topologies. Staging folder temp for files being replicated (default 4 GB). Conflict: last writer wins by modification timestamp. Monitor: dfsrdiag pollad, dfsrdiag syncnow, Get-DfsrState."},
+  {h:"FSRM and Work Folders",b:"FSRM (File Server Resource Manager): Install-WindowsFeature FS-Resource-Manager. Hard quota: writes fail when limit exceeded. Soft quota: monitoring only, alerts but does not block. Quota templates: reusable with threshold notifications. File Screening Active: blocks unauthorized file types. File Screening Passive: allows but audits. File Classification Infrastructure (FCI): auto-classifies files by content or properties. Expiration policy: moves classified files to archive. Work Folders: syncs corporate files to BYOD devices without VPN. Install Work Folders role, create sync share. Auto-discovery via DNS SRV record _workfolders._tcp. Supports Windows 10 and 11, iOS, Android."},
+  {h:"BranchCache",b:"Reduces WAN bandwidth by caching headquarters content at branch offices. When first branch client downloads, subsequent branch clients get it from local cache. Supported sources: HTTP and HTTPS web servers, SMB file servers, BITS transfers. Distributed Cache Mode: peer-to-peer sharing between branch clients using WS-Discovery, no dedicated server, best for small branches under 50 clients. Hosted Cache Mode: dedicated Windows Server at branch as cache server, clients upload to it and others download from it, recommended for larger branches. Configure hosted server: Enable-BCHostedServer -RegisterSCPHostname. Client GPO: Computer Configuration, Admin Templates, Network, BranchCache. Verify: netsh branchcache show status or Get-BCStatus."}
+ ],fc:[
+  {q:"What SMB version introduced Transparent Failover, Multichannel, RDMA, and encryption?",a:"SMB 3.0 (Windows Server 2012)"},
+  {q:"What cmdlet enables SMB encryption on a specific share?",a:"Set-SmbShare -Name ShareName -EncryptData $true"},
+  {q:"What algorithm does DFS-R use to replicate only changed file blocks?",a:"RDC (Remote Differential Compression)"},
+  {q:"What DFS-N feature shows users only folders they have permission to access?",a:"Access-Based Enumeration (ABE)"},
+  {q:"What FSRM quota type allows writes beyond the limit but sends alerts?",a:"Soft quota"},
+  {q:"What BranchCache mode uses peer-to-peer sharing without a dedicated server?",a:"Distributed Cache Mode (best for branches under 50 clients)"},
+  {q:"What BranchCache mode needs a dedicated Windows Server at the branch?",a:"Hosted Cache Mode (recommended for larger branches)"},
+  {q:"What command checks BranchCache status?",a:"netsh branchcache show status or Get-BCStatus"}
+ ]},
+ {id:"d5t3",title:"Azure Storage, File Sync, Backup and Clustering",secs:[
+  {h:"Azure Storage Accounts",b:"GPv2: recommended for all scenarios, supports blobs, files, queues, tables. FileStorage: premium SSD for Azure Files only. Blob access tiers: Hot (frequent, highest storage cost, lowest access cost), Cool (infrequent, 30-day minimum), Cold (90-day minimum), Archive (offline, 180-day minimum, must rehydrate: Standard 1 to 15 hours, High priority under 1 hour). Replication: LRS (3 copies same datacenter, cheapest), ZRS (3 copies across Availability Zones), GRS (LRS plus async to paired region), GZRS (ZRS plus async to paired region, most resilient). RA-GRS and RA-GZRS add read access to secondary region."},
+  {h:"Azure Files and Azure File Sync",b:"Azure Files: fully managed SMB 3.x and NFS 4.1 shares. Standard (HDD, flexible billing) and Premium (SSD, under 1ms latency, fixed provisioned size). Authentication: Storage account key (full admin), Azure AD Kerberos for Entra ID-joined and Hybrid joined VMs, on-prem AD DS authentication (join storage account to AD, preserves NTFS ACLs). Share permissions via Azure RBAC. File and directory permissions via NTFS ACLs. Azure File Sync: replicates on-prem Windows Server file shares to Azure Files. Components: Storage Sync Service, Sync Group, Cloud Endpoint (Azure Files share), Server Endpoint (path on Windows Server). Cloud tiering: files not recently accessed stored only in Azure as stubs. Volume free space policy: keep X percent of volume free by evicting LRU files. Date policy: tier files older than N days. Recall: Invoke-StorageSyncFileRecall. Multi-site sync via multiple server endpoints in same sync group."},
+  {h:"Azure Backup and Failover Clustering",b:"Recovery Services Vault: container for Azure Backup and ASR data. Vault storage: LRS (default), GRS, or ZRS. MARS Agent: backs up files, folders, and Windows system state from on-prem to Azure, important for domain controllers. VM backup: agentless for Azure VMs using VSS for application-consistent snapshots. Retention GFS: Daily, Weekly, Monthly, Yearly. Soft delete: deleted backup data retained 14 additional days, protects against ransomware. Immutable vault: WORM policy, backup data cannot be deleted or modified during retention. WSFC: Minimum 2 nodes. Validation required: Test-Cluster must pass before creating. Quorum: nodes plus optional witness. Witness types: Disk Witness, File Share Witness, Cloud Witness (Azure Blob, recommended, requires port 443 outbound, no extra infrastructure). Dynamic quorum: auto-adjusts votes as nodes join or leave. CSV: all nodes read and write simultaneously. SOFS: active-active SMB shares from all cluster nodes for Hyper-V storage."}
+ ],fc:[
+  {q:"What Azure blob tier requires rehydration before data can be accessed?",a:"Archive tier (Standard 1-15 hours, High priority under 1 hour)"},
+  {q:"What Azure Files authentication preserves NTFS ACLs from on-prem?",a:"On-premises AD DS authentication (join storage account to AD DS)"},
+  {q:"What Azure File Sync policy keeps a percentage of local volume free?",a:"Volume free space policy"},
+  {q:"What Azure Backup feature retains deleted backup data for 14 additional days?",a:"Soft delete"},
+  {q:"What WSFC witness uses Azure Blob Storage with no extra on-prem infrastructure?",a:"Cloud Witness"},
+  {q:"What cmdlet must run before creating a failover cluster?",a:"Test-Cluster -Node Node1,Node2"},
+  {q:"What Azure Backup vault policy uses WORM to prevent backup deletion?",a:"Immutable vault (Write Once Read Many)"}
+ ]}
+]}
+];
+
+var ALL_FC=D.flatMap(function(d){return d.topics.flatMap(function(t){return t.fc.map(function(f){return {q:f.q,a:f.a,dom:d.l,top:t.title,col:d.c};});});});
+var ALL_T=D.flatMap(function(d){return d.topics.map(function(t){return {id:t.id,title:t.title,secs:t.secs,fc:t.fc,domain:d};});});
+function shuf(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=b[i];b[i]=b[j];b[j]=x;}return b;}
+
+var S={view:'home',aD:null,aT:null,openS:{},studied:{},search:'',tab:'content',
+  qDom:'all',qCards:[],qIdx:0,qFlip:false,qScore:{c:0,i:0},qDone:false,
+  fDeck:[],fIdx:0,fFlip:false,fScore:{c:0,i:0},fDone:false,sb:true};
+
+function SC(){return Object.keys(S.studied).filter(function(k){return S.studied[k];}).length;}
+function PCT(){return Math.round((SC()/ALL_T.length)*100);}
+function toggleSB(){S.sb=!S.sb;document.getElementById('sb').className=S.sb?'':'hide';renderSB();}
+function goHome(){S.view='home';S.search='';render();}
+
+function GO(v,dId,tId){
+  S.view=v;S.search='';
+  if(dId) S.aD=D.find(function(d){return d.id===dId;});
+  if(tId&&S.aD){
+    var t=S.aD.topics.find(function(t){return t.id===tId;});
+    if(t){S.aT=t;S.tab='content';S.fDeck=shuf(t.fc);S.fIdx=0;S.fFlip=false;S.fScore={c:0,i:0};S.fDone=false;}
+  }
+  render();
+}
+
+function render(){
+  document.getElementById('pf').style.width=PCT()+'%';
+  document.getElementById('pct').textContent=PCT()+'%';
+  document.getElementById('stc').textContent=SC()+'/'+ALL_T.length;
+  renderSB();renderMain();
+}
+
+function renderSB(){
+  document.getElementById('sb').className=S.sb?'':'hide';
+  var h='<div style="padding:12px 0 4px">';
+  [['home','&#127968; Home'],['quiz-setup','&#127183; Flashcards'],['all-topics','&#128203; All Topics']].forEach(function(p){
+    h+='<button class="snav'+(S.view===p[0]?' on':'')+'" onclick="GO(\''+p[0]+'\')">'+p[1]+'</button>';
+  });
+  h+='</div><div class="slbl">Domains</div>';
+  D.forEach(function(d){
+    var aD=S.aD&&S.aD.id===d.id;
+    h+='<button class="sdom" style="color:'+(aD?d.c:'#3a5268')+'" onclick="GO(\'domain\',\''+d.id+'\')">';
+    h+=d.i+'<span style="flex:1">'+d.l+'</span>';
+    h+='<span class="sbadge" style="background:'+d.c+'15;color:'+d.c+';border:1px solid '+d.c+'25">'+d.w+'</span></button>';
+    if(aD){d.topics.forEach(function(t){
+      h+='<button class="stop'+(S.aT&&S.aT.id===t.id?' on':'')+'" onclick="GO(\'topic\',\''+d.id+'\',\''+t.id+'\')">';
+      h+=(S.studied[t.id]?'&#10003; ':'&middot; ')+t.title+'</button>';
+    });}
+  });
+  document.getElementById('sb').innerHTML=h;
+}
+
+function renderMain(){
+  var m=document.getElementById('main');
+  if(S.view==='home') m.innerHTML=vHome();
+  else if(S.view==='domain') m.innerHTML=vDomain();
+  else if(S.view==='topic') m.innerHTML=vTopic();
+  else if(S.view==='all-topics') m.innerHTML=vAll();
+  else if(S.view==='quiz-setup') m.innerHTML=vQSetup();
+  else if(S.view==='quiz') m.innerHTML=vQuiz();
+  var si=document.getElementById('srch');if(si) si.value=S.search;
+}
+
+function vHome(){
+  var res=[];
+  if(S.search.trim()){var q=S.search.toLowerCase();res=ALL_T.filter(function(t){return t.title.toLowerCase().includes(q)||t.secs.some(function(s){return s.h.toLowerCase().includes(q)||s.b.toLowerCase().includes(q);})||t.fc.some(function(f){return f.q.toLowerCase().includes(q)||f.a.toLowerCase().includes(q);});});}
+  var h='<div style="margin-bottom:22px"><h1 style="font-size:25px;font-weight:700;color:#f1f5f9;margin:0 0 4px">AZ-800 Study Guide</h1>';
+  h+='<p style="color:#4a5a72;font-size:13px">Administering Windows Server Hybrid Core Infrastructure &middot; 5 domains &middot; '+ALL_T.length+' topics &middot; '+ALL_FC.length+'+ flashcards</p></div>';
+  h+='<input type="text" id="srch" placeholder="&#128269;  Search topics, concepts, commands, cmdlets..." oninput="S.search=this.value;renderMain()"/>';
+  if(S.search.trim()){
+    h+='<div style="margin-bottom:20px"><div style="font-size:12px;color:#4a5a72;margin-bottom:8px">'+res.length+' result'+(res.length!==1?'s':'')+'</div>';
+    res.forEach(function(t){h+='<div class="card" style="padding:12px 15px;margin-bottom:8px;border-color:'+t.domain.c+'28;cursor:pointer" onclick="GO(\'topic\',\''+t.domain.id+'\',\''+t.id+'\')"><div style="font-size:11px;color:'+t.domain.c+';margin-bottom:2px">'+t.domain.l+'</div><div style="font-size:14px;color:#dde4ef">'+t.title+'</div></div>';});
+    h+='</div>';
+  } else {
+    h+='<div class="dgrid">';
+    D.forEach(function(d){
+      var ds=d.topics.filter(function(t){return S.studied[t.id];}).length;
+      var p=Math.round((ds/d.topics.length)*100);
+      var fc=d.topics.reduce(function(a,t){return a+t.fc.length;},0);
+      h+='<div class="dcard" style="border-color:'+d.c+'28" onclick="GO(\'domain\',\''+d.id+'\')" onmouseover="this.style.borderColor=\''+d.c+'60\';this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.borderColor=\''+d.c+'28\';this.style.transform=\'none\'">';
+      h+='<div class="dtop" style="background:linear-gradient(90deg,'+d.c+','+d.c+'60)"></div>';
+      h+='<div style="font-size:21px;margin-bottom:8px">'+d.i+'</div>';
+      h+='<div style="font-size:10px;color:'+d.c+';font-weight:700;letter-spacing:.07em;margin-bottom:3px">'+d.t+' &middot; '+d.w+'</div>';
+      h+='<div style="font-size:15px;font-weight:700;color:#f0f6ff;margin-bottom:5px">'+d.l+'</div>';
+      h+='<div style="font-size:11px;color:#4a5a72;margin-bottom:9px">'+d.topics.length+' topics &middot; '+fc+' flashcards</div>';
+      h+='<div class="dpbar"><div class="dpfill" style="width:'+p+'%;background:'+d.c+'"></div></div>';
+      h+='<div style="font-size:10px;color:#4a5a72;margin-top:3px">'+ds+'/'+d.topics.length+' studied</div></div>';
+    });
+    h+='</div>';
+    h+='<div style="display:flex;gap:10px;margin-bottom:22px;flex-wrap:wrap">';
+    h+='<button class="btn blg bbl" onclick="GO(\'quiz-setup\')">&#127183; Practice Flashcards</button>';
+    h+='<button class="btn blg bgr" onclick="GO(\'all-topics\')">&#128203; All Topics</button></div>';
+    var info=[['Exam Code','AZ-800'],['Certification','Windows Server Hybrid Administrator Associate'],['Co-Requirement','AZ-801 (required alongside AZ-800 for cert)'],['Passing Score','700 / 1000'],['Duration','~150 minutes'],['Last Updated','January 21, 2026'],['Cost','$165 USD'],['Question Types','MCQ, Case Study, Drag and Drop, Hot Area'],['2026 New Topics','SMB over QUIC, GPU-P, AKS Arc, SSH, Azure Update Manager, Defender for Cloud']];
+    h+='<div class="card" style="padding:18px"><div style="font-size:13px;color:#60a5fa;font-weight:700;margin-bottom:12px">&#128203; Exam Quick Reference</div><div class="igrid">';
+    info.forEach(function(i){h+='<div class="iitem"><div class="ilbl">'+i[0]+'</div><div class="ival">'+i[1]+'</div></div>';});
+    h+='</div></div>';
+  }
+  return h;
+}
+
+function vDomain(){
+  var d=S.aD;if(!d)return '';
+  var h='<div class="bc"><button class="btn bgy" onclick="goHome()">&#8592; Home</button><span class="bcsep">&rsaquo;</span><span style="color:'+d.c+';font-size:13px;font-weight:700">'+d.i+' '+d.l+'</span><span class="sbadge" style="background:'+d.c+'18;color:'+d.c+';border:1px solid '+d.c+'28;margin-left:4px">'+d.w+'</span></div>';
+  h+='<h2 style="font-size:18px;color:#f1f5f9;margin-bottom:15px">'+d.t+': '+d.l+'</h2>';
+  d.topics.forEach(function(t){
+    h+='<div class="card" style="cursor:pointer" onclick="GO(\'topic\',\''+d.id+'\',\''+t.id+'\')">';
+    h+='<div class="irow"><div><div style="font-size:14px;color:#dde4ef;font-weight:600">'+t.title+'</div><div style="font-size:11px;color:#4a5a72;margin-top:2px">'+t.secs.length+' sections &middot; '+t.fc.length+' flashcards</div></div>';
+    h+='<div style="display:flex;gap:8px;align-items:center">'+(S.studied[t.id]?'<span class="stag">&#10003; Studied</span>':'')+'<span style="color:#4a5a72">&rsaquo;</span></div></div></div>';
+  });
+  return h;
+}
+
+function vTopic(){
+  var t=S.aT,d=S.aD;if(!t||!d)return '';
+  var ist=S.studied[t.id];
+  var h='<div class="bc"><button class="btn bgy" onclick="goHome()">&#8592; Home</button><span class="bcsep">&rsaquo;</span>';
+  h+='<button class="bclink" style="color:'+d.c+'" onclick="GO(\'domain\',\''+d.id+'\')">'+d.l+'</button>';
+  h+='<span class="bcsep">&rsaquo;</span><span style="font-size:13px;color:#dde4ef">'+t.title+'</span></div>';
+  h+='<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;flex-wrap:wrap;gap:10px">';
+  h+='<h2 style="font-size:18px;color:#f1f5f9;margin:0">'+t.title+'</h2>';
+  h+='<button class="btn '+(ist?'bgr':'bgy')+'" onclick="S.studied[\''+t.id+'\']=!S.studied[\''+t.id+'\'];render()">'+(ist?'&#10003; Studied':'Mark as Studied')+'</button></div>';
+  h+='<div class="tabs"><button class="tab'+(S.tab==='content'?' on':'')+'" onclick="S.tab=\'content\';renderMain()">&#128218; Notes ('+t.secs.length+')</button>';
+  h+='<button class="tab'+(S.tab==='flashcards'?' on':'')+'" onclick="S.tab=\'flashcards\';renderMain()">&#127183; Flashcards ('+t.fc.length+')</button></div>';
+  if(S.tab==='content'){
+    t.secs.forEach(function(s,i){
+      var k=t.id+'-'+i,open=S.openS[k];
+      h+='<div class="card"><div class="ach" onclick="S.openS[\''+k+'\']=!S.openS[\''+k+'\'];renderMain()"><span class="act">'+s.h+'</span><span style="color:#4a5a72;transition:transform .2s;display:inline-block;transform:'+(open?'rotate(90deg)':'none')+'">&rsaquo;</span></div>';
+      if(open) h+='<div class="acb on"><p>'+s.b+'</p></div>';
+      h+='</div>';
+    });
+  } else {
+    h+=vFC(t.fc,d.c);
+  }
+  return h;
+}
+
+function vFC(cards,col){
+  if(!S.fDeck||!S.fDeck.length){S.fDeck=shuf(cards);S.fIdx=0;S.fFlip=false;S.fScore={c:0,i:0};S.fDone=false;}
+  if(S.fDone){
+    var p=Math.round((S.fScore.c/S.fDeck.length)*100);
+    return '<div class="fcwrap" style="padding:28px;text-align:center"><div style="font-size:42px;margin-bottom:10px">'+(p>=80?'&#127942;':p>=60?'&#128218;':'&#128170;')+'</div><div style="font-size:19px;color:#f1f5f9;margin-bottom:5px">Quiz Complete &mdash; '+p+'%</div><div style="display:flex;gap:14px;justify-content:center;margin:14px 0"><div style="background:#0d2a1a;border:1px solid #10b98128;border-radius:8px;padding:11px 22px"><div style="color:#10b981;font-size:22px">'+S.fScore.c+'</div><div style="color:#4a5a72;font-size:12px">Correct</div></div><div style="background:#2a0d0d;border:1px solid #ef444428;border-radius:8px;padding:11px 22px"><div style="color:#ef4444;font-size:22px">'+S.fScore.i+'</div><div style="color:#4a5a72;font-size:12px">Incorrect</div></div></div><button class="btn" style="background:'+col+'22;border:1px solid '+col+'50;color:'+col+';padding:9px 22px" onclick="S.fDeck=shuf(S.aT.fc);S.fIdx=0;S.fFlip=false;S.fScore={c:0,i:0};S.fDone=false;renderMain()">Restart</button></div>';
+  }
+  var c=S.fDeck[S.fIdx];
+  var h='<div class="fcwrap"><div class="fcctr">'+(S.fIdx+1)+' / '+S.fDeck.length+' &middot; '+S.fScore.c+' correct &middot; '+S.fScore.i+' missed</div>';
+  h+='<div class="fccard '+(S.fFlip?'a':'q')+'" style="border:1px solid '+(S.fFlip?'#10b98138':col+'38')+'" onclick="S.fFlip=!S.fFlip;renderMain()"><div class="fclbl" style="color:'+(S.fFlip?'#10b981':col)+'">'+(S.fFlip?'ANSWER':'QUESTION &mdash; click to reveal')+'</div><div class="fctxt">'+(S.fFlip?c.a:c.q)+'</div></div>';
+  if(S.fFlip){
+    h+='<div class="fcbtns"><button class="btn brd" onclick="S.fScore.i++;if(S.fIdx+1>=S.fDeck.length){S.fDone=true;}else{S.fIdx++;S.fFlip=false;}renderMain()">&#10007; Missed</button><button class="btn bgr" onclick="S.fScore.c++;if(S.fIdx+1>=S.fDeck.length){S.fDone=true;}else{S.fIdx++;S.fFlip=false;}renderMain()">&#10003; Got it</button></div>';
+  } else {
+    h+='<button class="btn" style="background:'+col+'22;border:1px solid '+col+'50;color:'+col+';margin-top:13px" onclick="S.fFlip=true;renderMain()">Reveal Answer</button>';
+  }
+  return h+'</div>';
+}
+
+function vAll(){
+  var h='<button class="btn bgy" onclick="goHome()" style="margin-bottom:16px">&#8592; Home</button><h2 style="font-size:18px;color:#f1f5f9;margin-bottom:16px">&#128203; All '+ALL_T.length+' Topics</h2>';
+  D.forEach(function(d){
+    h+='<div style="margin-bottom:18px"><div style="font-size:12px;color:'+d.c+';font-weight:700;margin-bottom:7px">'+d.i+' '+d.l+' &middot; '+d.w+'</div>';
+    d.topics.forEach(function(t){h+='<div class="card" style="cursor:pointer" onclick="GO(\'topic\',\''+d.id+'\',\''+t.id+'\')"><div class="irow"><span style="font-size:13px;color:#dde4ef">'+t.title+' <span style="color:#4a5a72;font-size:11px">&middot; '+t.fc.length+' cards</span></span><div style="display:flex;gap:8px">'+(S.studied[t.id]?'<span style="color:#10b981;font-size:12px">&#10003;</span>':'')+'<span style="color:#4a5a72">&rsaquo;</span></div></div></div>';});
+    h+='</div>';
+  });
+  return h;
+}
+
+function vQSetup(){
+  var h='<button class="btn bgy" onclick="goHome()" style="margin-bottom:16px">&#8592; Home</button><h2 style="font-size:18px;color:#f1f5f9;margin-bottom:16px">&#127183; Flashcard Practice</h2>';
+  h+='<div class="card" style="padding:17px;margin-bottom:13px"><div style="font-size:13px;color:#94a3b8;margin-bottom:12px">Select domain:</div>';
+  var opts=[{v:'all',l:'All Domains',cnt:ALL_FC.length,c:'#60a5fa'}];
+  D.forEach(function(d){opts.push({v:d.id,l:d.i+' '+d.l,cnt:d.topics.reduce(function(a,t){return a+t.fc.length;},0),c:d.c});});
+  opts.forEach(function(o){
+    h+='<div class="qopt'+(S.qDom===o.v?' on':'')+'" onclick="S.qDom=\''+o.v+'\';renderMain()"><span style="color:'+(S.qDom===o.v?o.c:'#94a3b8')+'">'+o.l+'</span><span class="qctag" style="background:'+o.c+'18;color:'+o.c+';border:1px solid '+o.c+'28">'+o.cnt+' cards</span></div>';
+  });
+  h+='<button class="btn blg bbl" style="width:100%;margin-top:13px;text-align:center" onclick="startQ()">Start Session &#8594;</button></div>';
+  h+='<div style="font-size:12px;color:#4a5a72">Click a card to reveal the answer, then mark correct or incorrect. Cards shuffle each session.</div>';
+  return h;
+}
+
+function startQ(){
+  var pool=S.qDom==='all'?ALL_FC:ALL_FC.filter(function(c){
+    var d=D.find(function(d){return d.id===S.qDom;});
+    return d&&c.dom===d.l;
+  });
+  if(!pool.length) pool=ALL_FC;
+  S.qCards=shuf(pool);S.qIdx=0;S.qFlip=false;S.qScore={c:0,i:0};S.qDone=false;S.view='quiz';renderMain();renderSB();
+}
+
+function vQuiz(){
+  if(S.qDone){
+    var tot=S.qCards.length,p=Math.round((S.qScore.c/tot)*100);
+    return '<div class="qres"><div style="font-size:50px;margin-bottom:12px">'+(p>=80?'&#127942;':p>=60?'&#128218;':'&#128170;')+'</div><div style="font-size:22px;color:#f1f5f9;margin-bottom:5px">Session Complete!</div><div style="font-size:14px;color:#4a5a72;margin-bottom:20px">'+S.qScore.c+'/'+tot+' correct &middot; '+p+'%</div><div class="sbox"><div class="si" style="background:#0d2018;border:1px solid #10b98128"><div style="color:#10b981;font-size:28px;font-weight:700">'+S.qScore.c+'</div><div style="color:#4a5a72;font-size:12px">Correct</div></div><div class="si" style="background:#200d0d;border:1px solid #ef444428"><div style="color:#ef4444;font-size:28px;font-weight:700">'+S.qScore.i+'</div><div style="color:#4a5a72;font-size:12px">Incorrect</div></div></div><div style="display:flex;gap:10px;justify-content:center"><button class="btn blg bbl" onclick="startQ()">Retry</button><button class="btn blg bgy" onclick="goHome()">Home</button></div></div>';
+  }
+  var c=S.qCards[S.qIdx],p2=Math.round((S.qIdx/S.qCards.length)*100);
+  var h='<div class="qwrap"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px"><button class="btn bgy" onclick="goHome()">&#8592; Exit</button><span style="font-size:12px;color:#4a5a72">'+(S.qIdx+1)+' / '+S.qCards.length+'</span></div>';
+  h+='<div class="qpbar"><div class="qpfill" style="width:'+p2+'%"></div></div>';
+  h+='<div class="qdtag" style="color:'+c.col+'">'+c.dom+' &rsaquo; '+c.top+'</div>';
+  h+='<div class="fccard '+(S.qFlip?'a':'q')+'" style="border:1px solid '+(S.qFlip?'#10b98138':'#3b82f638')+'" onclick="S.qFlip=!S.qFlip;renderMain()"><div class="fclbl" style="color:'+(S.qFlip?'#10b981':'#60a5fa')+'">'+(S.qFlip?'ANSWER':'QUESTION &mdash; click to reveal')+'</div><div class="fctxt">'+(S.qFlip?c.a:c.q)+'</div></div>';
+  if(S.qFlip){
+    h+='<div style="display:flex;gap:12px;justify-content:center;margin-top:17px"><button class="btn blg brd" onclick="S.qScore.i++;if(S.qIdx+1>=S.qCards.length){S.qDone=true;}else{S.qIdx++;S.qFlip=false;}renderMain()">&#10007; Missed it</button><button class="btn blg bgr" onclick="S.qScore.c++;if(S.qIdx+1>=S.qCards.length){S.qDone=true;}else{S.qIdx++;S.qFlip=false;}renderMain()">&#10003; Got it!</button></div>';
+  } else {
+    h+='<div style="display:flex;justify-content:center;margin-top:15px"><button class="btn blg bbl" onclick="S.qFlip=true;renderMain()">Reveal Answer</button></div>';
+  }
+  h+='<div style="display:flex;justify-content:center;gap:18px;margin-top:15px;font-size:13px"><span style="color:#10b981">&#10003; '+S.qScore.c+'</span><span style="color:#ef4444">&#10007; '+S.qScore.i+'</span></div></div>';
+  return h;
+}
+
+render();
+
+</script>
+</body>
+</html>
